@@ -49,7 +49,7 @@ Run the application:
 Example:
 
 ```bash
-./pokedex-go catch pikachu
+Pokedex > catch pikachu
 ```
 
 ## Configuration
