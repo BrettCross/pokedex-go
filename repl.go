@@ -27,10 +27,13 @@ func startREPL(cfg *config) {
 		}
 
 		commandName := words[0]
-
+		args := []string{}
+		if len(words) > 1 { // capture any optional args passed to command
+			args = words[1:]
+		}
 		value, ok := getCommands()[commandName]
 		if ok {
-			err := value.callback(cfg)
+			err := value.callback(cfg, args...)
 			if err != nil {
 				fmt.Printf("Error: %v\n", err)
 			}
@@ -51,7 +54,7 @@ func cleanInput(text string) []string {
 type cliCommand struct {
 	name        string
 	description string
-	callback    func(*config) error
+	callback    func(*config, ...string) error // allow for optional arguments for all commands
 }
 
 func getCommands() map[string]cliCommand{
@@ -75,6 +78,11 @@ func getCommands() map[string]cliCommand{
 			name:        "mapb",
 			description: "Display names of previous 20 locations",
 			callback:    commandMapb,
+		},
+		"explore": {
+			name:        "explore",
+			description: "Display possible pokemon encounters for given area",
+			callback:    commandExplore,
 		},
 	}
 }
