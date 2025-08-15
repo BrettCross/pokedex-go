@@ -24,7 +24,6 @@ func (c *Cache) Add(key string, entry []byte) {
 		return
 	}
 
-	// following is giving me an error
 	c.cache[key] = cacheEntry{
 		createdAt: time.Now(),
 		val: entry,
